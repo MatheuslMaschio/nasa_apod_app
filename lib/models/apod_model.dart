@@ -11,7 +11,6 @@ class Apod {
     required this.explanation,
   });
 
-  // Factory method to create an instance from a JSON object
   factory Apod.fromJson(Map<String, dynamic> json) {
     return Apod(
       title: json['title'] ?? '',
@@ -21,7 +20,6 @@ class Apod {
     );
   }
 
-  // Convert the instance to a JSON object
   Map<String, dynamic> toJson() {
     return {
       'title': title,

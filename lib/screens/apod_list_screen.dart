@@ -21,7 +21,6 @@ class _ApodListScreenState extends State<ApodListScreen> {
     _loadApodList();
   }
 
-  // Método para carregar a lista de APODs
   Future<void> _loadApodList() async {
     try {
       final list = await _apiService.fetchApodList();
@@ -30,7 +29,6 @@ class _ApodListScreenState extends State<ApodListScreen> {
         _filteredApodList = list;
       });
     } catch (e) {
-      // Mostrar mensagem de erro
       showDialog(
         context: context,
         builder: (context) => AlertDialog(
@@ -48,7 +46,6 @@ class _ApodListScreenState extends State<ApodListScreen> {
     }
   }
 
-  // Método para filtrar a lista de APODs
   void _filterApodList(String query) {
     setState(() {
       _filteredApodList = _apodList
@@ -79,7 +76,7 @@ class _ApodListScreenState extends State<ApodListScreen> {
           ),
           Expanded(
             child: RefreshIndicator(
-              onRefresh: _loadApodList, // Atualiza a lista ao puxar para baixo
+              onRefresh: _loadApodList,
               child: ListView.builder(
                 itemCount: _filteredApodList.length,
                 itemBuilder: (context, index) {

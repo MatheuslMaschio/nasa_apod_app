@@ -25,7 +25,6 @@ class ApiService {
     }
   }
 
-  // Método para armazenar APODs no cache
   Future<void> _cacheApodList(List<Apod> apodList) async {
     final box = await Hive.openBox('apodBox');
     final List<Map<String, dynamic>> jsonList =
@@ -33,7 +32,6 @@ class ApiService {
     await box.put('apodList', jsonEncode(jsonList));
   }
 
-  // Método para obter APODs do cache
   Future<List<Apod>> _getCachedApodList() async {
     final box = await Hive.openBox('apodBox');
     final cachedData = box.get('apodList');
