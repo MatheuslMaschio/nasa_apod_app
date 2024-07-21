@@ -9,12 +9,17 @@ class ApodDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: Text(apod['title'])),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Image.network(apod['url']),
+            Image.network(
+              apod['url'],
+              errorBuilder: (context, error, stackTrace) {
+                return Image.asset('assets/images/nophoto.png');
+              },
+            ),
             const SizedBox(height: 16),
             Text(
               apod['date'],
