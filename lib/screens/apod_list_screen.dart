@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:nasa_apod_app/services/api_service.dart';
+import '../services/api_service.dart';
+import '../models/apod_model.dart';
 import 'apod_detail_screen.dart';
 
 class ApodListScreen extends StatefulWidget {
@@ -11,8 +12,8 @@ class ApodListScreen extends StatefulWidget {
 
 class _ApodListScreenState extends State<ApodListScreen> {
   final ApiService _apiService = ApiService();
-  List<dynamic> _apodList = [];
-  List<dynamic> _filteredApodList = [];
+  List<Apod> _apodList = [];
+  List<Apod> _filteredApodList = [];
 
   @override
   void initState() {
@@ -20,6 +21,7 @@ class _ApodListScreenState extends State<ApodListScreen> {
     _loadApodList();
   }
 
+  // Método para carregar a lista de APODs
   Future<void> _loadApodList() async {
     try {
       final list = await _apiService.fetchApodList();
@@ -27,15 +29,19 @@ class _ApodListScreenState extends State<ApodListScreen> {
         _apodList = list;
         _filteredApodList = list;
       });
-    } catch (e) {}
+    } catch (e) {
+      // Adicione tratamento de erros aqui
+      print('Erro ao carregar a lista de APODs: $e');
+    }
   }
 
+  // Método para filtrar a lista de APODs
   void _filterApodList(String query) {
     setState(() {
       _filteredApodList = _apodList
           .where((apod) =>
-              apod['title'].toLowerCase().contains(query.toLowerCase()) ||
-              apod['date'].contains(query))
+              apod.title.toLowerCase().contains(query.toLowerCase()) ||
+              apod.date.contains(query))
           .toList();
     });
   }
@@ -44,7 +50,7 @@ class _ApodListScreenState extends State<ApodListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Astronomy Pictures of the day'),
+        title: const Text('Astronomy Pictures of the Day'),
       ),
       body: Column(
         children: [
@@ -66,8 +72,8 @@ class _ApodListScreenState extends State<ApodListScreen> {
                 itemBuilder: (context, index) {
                   final apod = _filteredApodList[index];
                   return ListTile(
-                    title: Text(apod['title']),
-                    subtitle: Text(apod['date']),
+                    title: Text(apod.title),
+                    subtitle: Text(apod.date),
                     onTap: () {
                       Navigator.push(
                         context,
