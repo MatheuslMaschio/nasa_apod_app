@@ -30,8 +30,21 @@ class _ApodListScreenState extends State<ApodListScreen> {
         _filteredApodList = list;
       });
     } catch (e) {
-      // Adicione tratamento de erros aqui
-      print('Erro ao carregar a lista de APODs: $e');
+      // Mostrar mensagem de erro
+      showDialog(
+        context: context,
+        builder: (context) => AlertDialog(
+          title: const Text('Erro'),
+          content: const Text(
+              'Não foi possível carregar os dados. Verifique sua conexão com a internet.'),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('OK'),
+            ),
+          ],
+        ),
+      );
     }
   }
 
