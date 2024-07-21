@@ -20,7 +20,7 @@ class _ApodListScreenState extends State<ApodListScreen> {
     _loadApodList();
   }
 
-  void _loadApodList() async {
+  Future<void> _loadApodList() async {
     try {
       final list = await _apiService.fetchApodList();
       setState(() {
@@ -59,7 +59,9 @@ class _ApodListScreenState extends State<ApodListScreen> {
             ),
           ),
           Expanded(
-            child: ListView.builder(
+            child: RefreshIndicator(
+              onRefresh: _loadApodList, // Atualiza a lista ao puxar para baixo
+              child: ListView.builder(
                 itemCount: _filteredApodList.length,
                 itemBuilder: (context, index) {
                   final apod = _filteredApodList[index];
@@ -75,8 +77,10 @@ class _ApodListScreenState extends State<ApodListScreen> {
                       );
                     },
                   );
-                }),
-          ),
+                },
+              ),
+            ),
+          )
         ],
       ),
     );
