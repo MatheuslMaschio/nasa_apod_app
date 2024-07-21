@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ApiService {
-  final String _baseUrl = '';
+  final String _baseUrl = 'https://api.nasa.gov/planetary/apod';
   final String _apiKey = 'UhYHeXGBZYkt70tymnZNsaLvX2myONVIyapTT2mP';
 
   Future<List<dynamic>> fetchApodList() async {
